@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="rotf3" type="get_odom.py" name="rotf3_get_odom" output="screen">
+  </node>
+</launch>

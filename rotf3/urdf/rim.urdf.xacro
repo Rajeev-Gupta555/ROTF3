@@ -1,0 +1,100 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find rotf3)/urdf/roller.urdf.xacro"/>
+
+<xacro:macro
+	name="rim_macro"
+	params="name color xyz rpy">
+
+		<link name="rim_${name}_link">
+			<inertial>
+				<origin xyz="0 0 -0.000343"/>
+				<mass value="0.0835758"/>
+				<inertia
+					ixx="0.000165921"
+					ixy="0"
+					ixz="0"
+					iyy="0.000165921"
+					iyz="0"
+					izz="0.00023508325"/>
+			</inertial>
+			<visual>
+				<geometry>
+
+					<mesh filename="package://rotf3/mesh/rim.stl" scale = "5 5 5"/>
+				</geometry>
+				<material name="rim_${name}_material">
+					<color rgba="${color} 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="package://rotf3/mesh/rim.stl" scale = "5 5 5"/>
+				</geometry>
+			</collision>
+			
+		</link>
+
+		<joint
+			name="rim_${name}_joint"
+			type="continuous">
+
+			<parent link="base_link" />
+			<child link="rim_${name}_link" />
+			<axis xyz="0 0 1"/>
+			<origin xyz="${xyz}" rpy="${rpy}"/>
+
+		</joint>
+		<xacro:roller_macro
+			parent="${name}"
+			name="e"
+			xyz="0.06775 0 0.0275"
+			rpy="-1.570796326794896 0 0"
+		/>
+		<xacro:roller_macro
+			parent="${name}"
+			name="ne"
+			xyz="0.04790648445 0.04790648445 -0.0275"
+			rpy="-1.570796326794896 0 0.7853981633974483"
+		/>
+		<xacro:roller_macro
+			parent="${name}"
+			name="n"
+			xyz="0 0.06775 0.0275"
+			rpy="-1.570796326794896 0 1.570796326794896"
+		/>
+		<xacro:roller_macro
+			parent="${name}"
+			name="nw"
+			xyz="-0.04790648445 0.04790648445 -0.0275"
+			rpy="-1.570796326794896 0 2.356194490192345"
+		/>
+		<xacro:roller_macro
+			parent="${name}"
+			name="w"
+			xyz="-0.06775 0 0.0275"
+			rpy="-1.570796326794896 0 3.141592653589793"
+		/>
+		<xacro:roller_macro
+			parent="${name}"
+			name="sw"
+			xyz="-0.04790648445 -0.04790648445 -0.0275"
+			rpy="-1.570796326794896 0 -2.356194490192345"
+		/>
+		<xacro:roller_macro
+			parent="${name}"
+			name="s"
+			xyz="0 -0.06775 0.0275"
+			rpy="-1.570796326794896 0 -1.570796326794896"
+		/>
+		<xacro:roller_macro
+			parent="${name}"
+			name="se"
+			xyz="0.04790648445 -0.04790648445 -0.0275"
+			rpy="-1.570796326794896 0 -0.7853981633974483"
+		/>
+
+	</xacro:macro>
+
+</robot>

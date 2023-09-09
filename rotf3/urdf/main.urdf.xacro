@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rotf3">
+	<xacro:include filename="$(find rotf3)/urdf/rim.urdf.xacro"/>
+	<material name="dark">
+    	<color rgba="0.3 0.3 0.3 1.0"/>
+  </material>
+	
+	<link name="base_footprint"/>
+	<link name="base_link">
+
+	<inertial>
+	<mass value="0.7862944645"/>
+	<inertia
+		ixx="0.005089963826854"
+		ixy="0"
+		ixz="0"
+		iyy="0.005089963826854"
+		iyz="0"
+		izz="0.00986485415805"/>
+</inertial>
+	<visual>
+		<geometry>
+			<mesh filename="package://rotf3/mesh/base.stl" scale="5 5 5"/>
+			<!-- <mesh filename="package://rotf3/mesh/base.stl" /> -->
+
+		</geometry>
+		<material name="base_material">
+			<color rgba="1 1 1 1"/>
+		</material>
+	</visual>
+	<collision>
+		<geometry>
+			<mesh filename="package://rotf3/mesh/base.stl" scale="5 5 5"/>
+			<!-- <mesh filename="package://rotf3/mesh/base.stl" /> -->
+		</geometry>
+	</collision>
+
+	</link>
+	<joint name="base_joint" type="fixed">
+		<parent link="base_footprint" />
+		<child link="base_link" />
+		<origin xyz="0 0 0.09525" rpy="0 0 -2.6"/>
+	</joint>
+
+	<xacro:rim_macro
+    name="one"
+    color="0.3 0 0"
+    xyz="-0.180435844838 0.104 0"
+    rpy="1.570796326794896 0 1.047197551196597"/>
+<xacro:rim_macro
+    name="two"
+    color="0 0.3 0"
+    xyz="0 -0.208 0"
+    rpy="1.570796326794896 0 3.141592653589793"/>
+<xacro:rim_macro
+    name="three"
+    color="0 0 0.3"
+    xyz="0.180435844838 0.104 0"
+    rpy="1.570796326794896 0 -1.047197551196597"/>
+
+
+
+	<gazebo reference="base_link">
+    		<material>Gazebo/White</material>
+        <mu1>0.2</mu1>
+  		  <mu2>0.2</mu2>
+  		  <selfCollide>true</selfCollide>
+  	</gazebo>
+
+	<gazebo reference="rim_one_link">
+    		<material>Gazebo/Red</material>
+        <mu1>0.2</mu1>
+  		  <mu2>0.2</mu2>
+  		  <selfCollide>true</selfCollide>
+  	</gazebo>
+
+	<gazebo reference="rim_two_link">
+    		<material>Gazebo/Green</material>
+        <mu1>0.2</mu1>
+  		  <mu2>0.2</mu2>
+  		  <selfCollide>true</selfCollide>
+  	</gazebo>
+
+	<gazebo reference="rim_three_link">
+    		<material>Gazebo/Blue</material>
+        <mu1>0.2</mu1>
+  		  <mu2>0.2</mu2>
+  		  <selfCollide>true</selfCollide>
+  	</gazebo>
+	<gazebo>
+		<plugin name="omni_controller" filename="libomni_controller.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometrySource>world</odometrySource>
+      <publishOdomTF>true</publishOdomTF>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+      <publishWheelTF>false</publishWheelTF>
+      <publishTf>true</publishTf>
+      <publishWheelJointState>true</publishWheelJointState>
+      <legacyMode>false</legacyMode>
+      <updateRate>30</updateRate>
+      <joint1>rim_one_joint</joint1>
+      <joint2>rim_two_joint</joint2>
+      <joint3>rim_three_joint</joint3>
+      <omni_radii>0.208</omni_radii>
+      <wheelDiameter>0.073118483</wheelDiameter>
+      <wheelAcceleration>1</wheelAcceleration>
+      <wheelTorque>10</wheelTorque>
+      <rosDebugLevel>na</rosDebugLevel>
+    </plugin>
+	</gazebo>
+	
+	<!-- To resolve error in tfs -->
+	<joint name="imu_joint" type="fixed">
+    	<parent link="base_footprint"/>
+    	<child link="imu_link"/>
+    	<origin xyz="-0.032 0 0.16325" rpy="0 0 0"/>
+  	</joint>
+
+  	<link name="imu_link"/>
+
+  	<joint name="scan_joint" type="fixed">
+    	<parent link="base_footprint"/>
+    	<child link="base_scan"/>
+    	<origin xyz="-0.032 0 0.26725" rpy="0 0 0"/>
+  	</joint>
+
+  	<link name="base_scan">
+    <visual>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rotf3/mesh/lds.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0.015 0 -0.0065" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.0315" radius="0.055"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="0.114" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
+
+  <!-- defining imu and laser in gazebo -->
+  <gazebo reference="imu_link">
+    <sensor type="imu" name="imu">
+      <always_on>true</always_on>
+      <visualize>false</visualize>
+    </sensor>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>imu_link</bodyName>
+      <frameName>imu_link</frameName>
+      <topicName>imu</topicName>
+      <serviceName>imu_service</serviceName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <updateRate>0</updateRate>
+      <imu>
+        <noise>
+          <type>gaussian</type>
+          <rate>
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </rate>
+          <accel>
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </accel>
+        </noise>
+      </imu>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="base_scan">
+    <material>Gazebo/FlatBlack</material>
+    <sensor type="ray" name="lds_lfcd_sensor">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+        <scan>
+          <horizontal> 
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>0.0</min_angle>
+            <max_angle>6.28319</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.120</min>
+          <max>8</max>
+          <resolution>0.015</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
+        <topicName>scan</topicName>
+        <frameName>base_scan</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+</robot>
