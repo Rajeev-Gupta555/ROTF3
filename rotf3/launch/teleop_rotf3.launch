@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="rotf3" type="teleop_rotf3.py" name="rotf3_teleop_keyboard"  output="screen">
+  </node>
+  <node pkg="rotf3" type="loop_cmd_vel.py" name="rotf3_loop_pub">
+  </node>
+</launch>
