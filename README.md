@@ -4,7 +4,7 @@ Restaurant of the Future (RoTF) is a autonomous bot that can take orders from th
 
 # SLAM and Autonomous Navigation using ROS and Omni Drive
 
-![Robot in Action](https://github.com/rajeev-gupta-bashrc/ROTF3/images/rotf3_hardware.jpg)
+![Robot in Action](https://github.com/rajeev-gupta-bashrc/ROTF3/blob/main/images/rotf3_hardware.jpg)
 
 Welcome to the **SLAM and Autonomous Navigation using ROS and Omni Drive** project repository! This project demonstrates the integration of Simultaneous Localization and Mapping (SLAM) techniques with the powerful ROS `move_base` package, enabling autonomous navigation for a robot equipped with a 3-wheeled Omni Drive system. The project also incorporates Omni kinematics to achieve precise and omnidirectional movement, allowing the robot to traverse complex environments effortlessly.
 
@@ -79,10 +79,10 @@ Your map's image and `.yaml` file should be saved in the `maps` folder. If you w
 
 ## Omni Kinematics
 
-![Robot in Action](https://github.com/rajeev-gupta-bashrc/ROTF3/images/rotf3_kinematics.png)
+![Robot in Action](https://github.com/rajeev-gupta-bashrc/ROTF3/blob/main/images/rotf3_kinematics.png)
 
 ### 3 wheeled Omni Solution
-![Robot in Action](https://github.com/rajeev-gupta-bashrc/ROTF3/images/rotf3_matrix.png)
+![Robot in Action](https://github.com/rajeev-gupta-bashrc/ROTF3/blob/main/images/rotf3_matrix.png)
 
 ## Contributing
 ---
