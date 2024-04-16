@@ -84,6 +84,11 @@ Your map's image and `.yaml` file should be saved in the `maps` folder. If you w
 ### 3 wheeled Omni Solution
 ![Robot in Action](https://github.com/rajeev-gupta-bashrc/ROTF3/blob/main/images/rotf3_matrix.png)
 
+### Simulation Results:
+![Robot in Action](https://github.com/rajeev-gupta-bashrc/ROTF3/blob/main/images/rotf3_rviz.gif)
+
+![Robot in Action](https://github.com/rajeev-gupta-bashrc/ROTF3/blob/main/images/rotf3_gazebo.gif)
+
 ## Contributing
 ---
 Feel free to explore, learn, and contribute to the convergence of robotics, SLAM, and autonomous navigation using ROS and Omni Drive technology. Happy exploring! 🤖🌟
